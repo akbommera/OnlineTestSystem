@@ -1,0 +1,28 @@
+<div class="container" *ngIf="evaluationData?.length > 0">
+    <button (click)="routes.navigate(['/']);">Logout</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sr no.</th>
+                <th *ngFor="let col of columns;let sr = index">
+                    {{col.Display_Name}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of evaluationData; let i = index;">
+                <td>{{i + 1}}</td>
+                <td>{{user?.first_name}}</td>
+                <td>{{user?.last_name}}</td>
+                <td>{{user?.marks}}</td>
+                <td>{{user?.out_of}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<p *ngIf="evaluationData && evaluationData?.length < 1">
+    TO add sample questions in database <br> {{newQuestList | json}}
+</p>
+<button (click)="AddQuestions()" *ngIf="evaluationData && evaluationData?.length < 1">Add</button>

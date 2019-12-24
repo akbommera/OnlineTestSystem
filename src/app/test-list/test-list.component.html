@@ -1,0 +1,21 @@
+<h2 *ngIf="(showMarks || showQuestions) && user.login_type === 'user'">Test conducted by {{companyName}}</h2>
+<button (click)="route.navigate(['/']);">Logout</button>
+<div *ngIf="(showQuestions | async) && !showMarks && user.login_type === 'user'">Remaining time: {{totalSeconds}}sec</div>
+<div *ngIf="(showQuestions | async) && !showMarks">
+    <div [style.width]="'100%'" *ngFor="let qlist of questList; let i = index">
+        <h4>{{qlist.question_type}}</h4>
+        <span *ngFor="let q of qlist.list; let i = index">
+      {{i + 1}}. {{q.question}}
+      <span [style.float]="'right'" *ngIf="userAns[i]">
+        Selected: {{userAns[i]}}</span><br>
+        <p *ngFor="let option of q.options; let ct = index">
+            <input type="radio" [name]="i" [value]="option" (click)="selectAnswer(i, option)"> {{getAlphaCount(ct)}}. {{option}}
+        </p>
+        </span>
+    </div>
+    <br>
+    <button [style.background-color]="'#3498db'" (click)="finalSubmit()" [disabled]="!(questList[0]?.list?.length === userAns?.length)">Submit</button>
+</div>
+<div *ngIf="(showMarks)">
+    you got marks {{marksToShow}} out of {{out_of}}
+</div>
